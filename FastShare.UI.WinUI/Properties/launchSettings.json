@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FastShare.UI.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "FastShare.UI.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

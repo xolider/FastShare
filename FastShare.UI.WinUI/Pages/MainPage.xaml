@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="FastShare.UI.WinUI.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FastShare.UI.WinUI.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:FastShare.UI.Shared.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="30">
+        <Button Command="{Binding ReceiveCommand}">
+            <StackPanel Orientation="Vertical" Spacing="10">
+                <SymbolIcon Symbol="Download"/>
+                <TextBlock Text="Recevoir un fichier"/>
+            </StackPanel>
+        </Button>
+        <Button Command="{Binding SendCommand}">
+            <StackPanel Orientation="Vertical" Spacing="10">
+                <SymbolIcon Symbol="Send"/>
+                <TextBlock Text="Envoyer un fichier"/>
+            </StackPanel>
+        </Button>
+    </StackPanel>
+</Page>
