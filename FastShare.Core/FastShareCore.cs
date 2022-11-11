@@ -30,8 +30,11 @@ namespace FastShare.Core
         public event Action SendStarted;
         public event Action<int> SendProgress;
 
+        private bool _hasRequestedCode = false;
+
         public async Task<int> RequestCode()
         {
+            _hasRequestedCode = true;
             return await _api.GetCode();
         }
 
@@ -42,6 +45,7 @@ namespace FastShare.Core
 
         public async Task<bool> ReceiveFile(string outPath)
         {
+            if (!_hasRequestedCode) throw new Exception("You must call RequestCode() before receiving a file");
             try
             {
                 await Task.Run(() =>
