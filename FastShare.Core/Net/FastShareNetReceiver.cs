@@ -22,25 +22,25 @@ namespace FastShare.Core.Net
             Socket.Bind(endpoint);
         }
 
-        public async Task Listen()
+        public void Listen()
         {
             Socket.Listen(1);
-            _clientSocket = await Socket.AcceptAsync();
+            _clientSocket = Socket.Accept();
         }
 
-        public async Task<FastShareFileInfo> GetFileInfo()
+        public FastShareFileInfo GetFileInfo()
         {
             var info = new FastShareFileInfo();
 
             var lengthBytes = new byte[8];
 
-            await _clientSocket.ReceiveAsync(lengthBytes, SocketFlags.None);
+            _clientSocket.Receive(lengthBytes, SocketFlags.None);
 
-            int length = (int)BitConverter.ToInt64(lengthBytes);
+            int length = (int)BitConverter.ToInt64(lengthBytes, 0);
 
             var titleBytes = new byte[2048];
 
-            await _clientSocket.ReceiveAsync(titleBytes, SocketFlags.None);
+            _clientSocket.Receive(titleBytes, SocketFlags.None);
 
             string title = Encoding.UTF8.GetString(titleBytes);
 
@@ -50,26 +50,26 @@ namespace FastShare.Core.Net
             return info;
         }
 
-        public async Task DownloadFile(string completePath, Action<int> progress)
+        public void DownloadFile(string completePath, Action<int> progress)
         {
             File.Create(completePath);
 
-            await File.WriteAllTextAsync(completePath, "");
+            File.WriteAllText(completePath, "");
             var stream = File.OpenWrite(completePath);
 
             byte[] buffer = new byte[2048];
 
             int currentRead;
             int read = 0;
-            while((currentRead = await _clientSocket.ReceiveAsync(buffer, SocketFlags.None)) != -1)
+            while((currentRead = _clientSocket.Receive(buffer, SocketFlags.None)) != -1)
             {
+
+                stream.Write(buffer, read, buffer.Length);
                 read += currentRead;
                 progress(read);
-
-                await stream.WriteAsync(buffer);
             }
 
-            await stream.FlushAsync();
+            stream.Flush();
             stream.Close();
         }
     }

@@ -18,7 +18,7 @@ namespace FastShare.Core.Net
             Socket.Connect(endpoint);
         }
 
-        public async Task SendFileInfo(string filePath)
+        public void SendFileInfo(string filePath)
         {
             var file = new FileInfo(filePath);
             var name = file.Name;
@@ -26,14 +26,14 @@ namespace FastShare.Core.Net
 
             var lengthBytes = BitConverter.GetBytes((long)length);
 
-            await Socket.SendAsync(lengthBytes, SocketFlags.None);
+            Socket.Receive(lengthBytes, SocketFlags.None);
 
             var titleBytes = Encoding.UTF8.GetBytes(name);
 
-            await Socket.SendAsync(titleBytes, SocketFlags.None);
+            Socket.Send(titleBytes, SocketFlags.None);
         }
 
-        public async Task SendFile(string fullPath, Action<int> progress)
+        public void SendFile(string fullPath, Action<int> progress)
         {
             byte[] buffer = new byte[2048];
 
@@ -42,15 +42,16 @@ namespace FastShare.Core.Net
             int currentRead;
             int read = 0;
 
-            while((currentRead = await stream.ReadAsync(buffer)) != -1)
+            while((currentRead = stream.Read(buffer, read, buffer.Length)) != -1)
             {
+
+                Socket.Send(buffer, SocketFlags.None);
+
                 read += currentRead;
                 progress(read);
-
-                await Socket.SendAsync(buffer, SocketFlags.None);
             }
 
-            await stream.FlushAsync();
+            stream.Flush();
             stream.Close();
         }
     }

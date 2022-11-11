@@ -19,11 +19,11 @@ namespace FastShare.UI.Shared.ViewModels
         {
             _receiveCommand = new CommandBase((args) => true, (args) =>
             {
-                app.CurrentWindow.NavigateToPage(IWindow.NavPage.RECEIVE);
+                app.CurrentWindow.NavigateToPage(NavPage.RECEIVE);
             });
             _sendCommand = new CommandBase((args) => true, (args) =>
             {
-                app.CurrentWindow.NavigateToPage(IWindow.NavPage.SEND);
+                app.CurrentWindow.NavigateToPage(NavPage.SEND);
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using FastShare.UI.Shared.Interfaces;
+﻿using FastShare.UI.Shared.Components;
+using FastShare.UI.Shared.Interfaces;
 using FastShare.UI.WinUI.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -36,15 +37,15 @@ namespace FastShare.UI.WinUI
             LoadIcon();
         }
 
-        void IWindow.NavigateToPage(IWindow.NavPage page)
+        void IWindow.NavigateToPage(NavPage page)
         {
             Type targetPage = null;
             switch(page)
             {
-                case IWindow.NavPage.MAIN:
+                case NavPage.MAIN:
                     targetPage = typeof(MainPage);
                     break;
-                case IWindow.NavPage.RECEIVE:
+                case NavPage.RECEIVE:
                     targetPage = typeof(ReceivePage);
                     break;
             }

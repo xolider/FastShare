@@ -9,7 +9,7 @@ namespace FastShare.Core
 {
     public class FastShareCore
     {
-        private static FastShareCore? _instance;
+        private static FastShareCore _instance;
 
         public static FastShareCore Instance
         {
@@ -44,13 +44,16 @@ namespace FastShare.Core
         {
             try
             {
-                var net = new FastShareNetReceiver();
-                await net.Listen();
+                await Task.Run(() =>
+                {
+                    var net = new FastShareNetReceiver();
+                    net.Listen();
 
-                var fileInfo = await net.GetFileInfo();
-                DownloadStarted?.Invoke(fileInfo);
+                    var fileInfo = net.GetFileInfo();
+                    DownloadStarted?.Invoke(fileInfo);
 
-                await net.DownloadFile(Path.Combine(outPath, fileInfo.Title), DownloadProgress);
+                    net.DownloadFile(Path.Combine(outPath, fileInfo.Title), DownloadProgress);
+                });
                 return true;
             }
             catch(Exception e)
@@ -63,14 +66,17 @@ namespace FastShare.Core
         {
             try
             {
-                var address = await GetHostByCode(code);
+                await Task.Run(async () =>
+                {
+                    var address = await GetHostByCode(code);
 
-                var net = new FastShareNetSender(address);
+                    var net = new FastShareNetSender(address);
 
-                SendStarted?.Invoke();
-                await net.SendFileInfo(filePath);
+                    SendStarted?.Invoke();
+                    net.SendFileInfo(filePath);
 
-                await net.SendFile(filePath, SendProgress);
+                    net.SendFile(filePath, SendProgress);
+                });
 
                 return true;
             }
