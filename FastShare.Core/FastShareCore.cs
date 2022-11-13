@@ -20,7 +20,7 @@ namespace FastShare.Core
             }
         }
 
-        public static string DEFAULT_OUTPUT_PATH { get; private set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        public static string DEFAULT_OUTPUT_PATH { get; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         private FastShareApi _api = new FastShareApi();
 
@@ -43,7 +43,7 @@ namespace FastShare.Core
             return await _api.GetAddress(code);
         }
 
-        public async Task<bool> ReceiveFile(string outPath)
+        public async Task<bool> ReceiveFile(string outPath = null)
         {
             if (!_hasRequestedCode) throw new Exception("You must call RequestCode() before receiving a file");
             try
@@ -56,7 +56,10 @@ namespace FastShare.Core
                     var fileInfo = net.GetFileInfo();
                     DownloadStarted?.Invoke(fileInfo);
 
-                    net.DownloadFile(Path.Combine(outPath, fileInfo.Title), DownloadProgress);
+                    net.DownloadFile(Path.Combine(outPath == null ? DEFAULT_OUTPUT_PATH : outPath, fileInfo.Title), fileInfo.Length, DownloadProgress);
+
+                    net.CloseClient();
+                    net.Shutdown();
                 });
                 return true;
             }
@@ -79,7 +82,9 @@ namespace FastShare.Core
                     SendStarted?.Invoke();
                     net.SendFileInfo(filePath);
 
-                    net.SendFile(filePath, SendProgress);
+                    net.SendFile(filePath, new FileInfo(filePath).Length, SendProgress);
+
+                    net.Shutdown();
                 });
 
                 return true;

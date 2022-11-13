@@ -12,6 +12,7 @@ namespace FastShare.Core.Net
         public void Shutdown()
         {
             Socket.Close();
+            Socket.Dispose();
         }
     }
 }

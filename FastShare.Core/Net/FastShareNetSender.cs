@@ -24,16 +24,20 @@ namespace FastShare.Core.Net
             var name = file.Name;
             var length = file.Length;
 
-            var lengthBytes = BitConverter.GetBytes((long)length);
+            var lengthBytes = BitConverter.GetBytes(length);
 
-            Socket.Receive(lengthBytes, SocketFlags.None);
+            Socket.Send(lengthBytes, SocketFlags.None);
 
             var titleBytes = Encoding.UTF8.GetBytes(name);
+
+            var titleBytesLength = BitConverter.GetBytes(titleBytes.Length);
+
+            Socket.Send(titleBytesLength, SocketFlags.None);
 
             Socket.Send(titleBytes, SocketFlags.None);
         }
 
-        public void SendFile(string fullPath, Action<int> progress)
+        public void SendFile(string fullPath, long length, Action<int> progress)
         {
             byte[] buffer = new byte[2048];
 
@@ -42,10 +46,10 @@ namespace FastShare.Core.Net
             int currentRead;
             int read = 0;
 
-            while((currentRead = stream.Read(buffer, read, buffer.Length)) != -1)
+            while(read < length)
             {
-
-                Socket.Send(buffer, SocketFlags.None);
+                currentRead = stream.Read(buffer, 0, buffer.Length);
+                Socket.Send(buffer, 0, buffer.Length, SocketFlags.None);
 
                 read += currentRead;
                 progress(read);

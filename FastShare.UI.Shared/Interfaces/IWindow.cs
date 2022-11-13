@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FastShare.UI.Shared.Interfaces
 {
-    internal interface IWindow
+    public interface IWindow
     {
 
         void NavigateToPage(NavPage page);

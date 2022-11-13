@@ -34,13 +34,17 @@ namespace FastShare.Core.Net
 
             var lengthBytes = new byte[8];
 
-            _clientSocket.Receive(lengthBytes, SocketFlags.None);
+            _clientSocket.Receive(lengthBytes);
 
-            int length = (int)BitConverter.ToInt64(lengthBytes, 0);
+            long length = BitConverter.ToInt64(lengthBytes, 0);
 
-            var titleBytes = new byte[2048];
+            var titleLength = new byte[4];
 
-            _clientSocket.Receive(titleBytes, SocketFlags.None);
+            _clientSocket.Receive(titleLength);
+
+            var titleBytes = new byte[BitConverter.ToInt32(titleLength, 0)];
+
+            _clientSocket.Receive(titleBytes);
 
             string title = Encoding.UTF8.GetString(titleBytes);
 
@@ -50,27 +54,30 @@ namespace FastShare.Core.Net
             return info;
         }
 
-        public void DownloadFile(string completePath, Action<int> progress)
+        public void DownloadFile(string completePath, long length, Action<int> progress)
         {
-            File.Create(completePath);
-
-            File.WriteAllText(completePath, "");
             var stream = File.OpenWrite(completePath);
 
             byte[] buffer = new byte[2048];
 
-            int currentRead;
+            int currentRead = -1;
             int read = 0;
-            while((currentRead = _clientSocket.Receive(buffer, SocketFlags.None)) != -1)
+            while(read < length)
             {
-
-                stream.Write(buffer, read, buffer.Length);
+                currentRead = _clientSocket.Receive(buffer);
+                stream.Write(buffer, 0, buffer.Length);
                 read += currentRead;
                 progress(read);
             }
 
             stream.Flush();
             stream.Close();
+        }
+
+        internal void CloseClient()
+        {
+            _clientSocket.Close();
+            _clientSocket.Dispose();
         }
     }
 }

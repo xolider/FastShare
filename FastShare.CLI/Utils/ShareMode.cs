@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace FastShare.UI.Shared.Components
+namespace FastShare.CLI.Utils
 {
-    public enum NavPage
+    internal enum ShareMode
     {
-        MAIN,
         RECEIVE,
         SEND
     }

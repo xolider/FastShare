@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FastShare.UI.Shared.Interfaces
 {
-    internal interface IApp
+    public interface IApp
     {
         IWindow CurrentWindow { get; }
     }
