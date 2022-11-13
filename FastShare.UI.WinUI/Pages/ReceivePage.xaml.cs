@@ -42,7 +42,7 @@ namespace FastShare.UI.WinUI.Pages
             var picker = new FolderPicker();
             picker.FileTypeFilter.Add("*");
 
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, ((App.Current as IApp).CurrentWindow as MainWindow).hWnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, ((App.Current as IApp).CurrentWindow as MainWindow).hWnd); //Associates the FolderPicker with this Win32 window
             var folder = await picker.PickSingleFolderAsync();
 
             _vm.ReceiveFile(folder?.Path);

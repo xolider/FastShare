@@ -29,6 +29,9 @@ namespace FastShare.UI.WinUI
     /// </summary>
     public sealed partial class MainWindow : Window, IWindow
     {
+        /// <summary>
+        /// Implementation of the Win32 window
+        /// </summary>
         public IntPtr hWnd;
 
         public MainWindow()
@@ -42,6 +45,10 @@ namespace FastShare.UI.WinUI
             LoadIcon();
         }
 
+        /// <summary>
+        /// Implementation of the custom navigation system
+        /// </summary>
+        /// <param name="page">The target to navigate to</param>
         void IWindow.NavigateToPage(NavPage page)
         {
             Type targetPage = null;
@@ -62,7 +69,7 @@ namespace FastShare.UI.WinUI
         private void Resize(int width, int height)
         {
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId); //Win32 implementation of AppWindow
 
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Width = width, Height = height });
         }
@@ -73,7 +80,7 @@ namespace FastShare.UI.WinUI
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
             var assembly = Assembly.GetEntryAssembly();
-            var rName = assembly.GetManifestResourceNames().FirstOrDefault(s => s.EndsWith("fastshare.ico", StringComparison.InvariantCulture));
+            var rName = assembly.GetManifestResourceNames().FirstOrDefault(s => s.EndsWith("fastshare.ico", StringComparison.InvariantCulture)); //Retreives the icon resource from this assembly manifest (required for runtime when compiled)
             var icon = new Icon(assembly.GetManifestResourceStream(rName));
 
             appWindow.SetIcon(Microsoft.UI.Win32Interop.GetIconIdFromIcon(icon.Handle));

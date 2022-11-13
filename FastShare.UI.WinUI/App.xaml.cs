@@ -50,6 +50,10 @@ namespace FastShare.UI.WinUI
             m_window.Activate();
         }
 
+        /// <summary>
+        /// Runs the code of this Action in the DispatcherQueue (desktop UI thread)
+        /// </summary>
+        /// <param name="action">Code to be executed on UI thread</param>
         public void RunOnUIThread(Action action)
         {
             m_window.DispatcherQueue.TryEnqueue(() => action());
@@ -57,6 +61,6 @@ namespace FastShare.UI.WinUI
 
         private Window m_window;
 
-        IWindow IApp.CurrentWindow => m_window as IWindow;
+        IWindow IApp.CurrentWindow => m_window as IWindow; //Implementation of the navigable window
     }
 }

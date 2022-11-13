@@ -64,6 +64,11 @@ namespace FastShare.UI.Shared.ViewModels
             RequestCode();
         }
 
+        /*
+         * Event delegates have to be run on UI thread since they are called from another thread pool from another assembly.
+         * Take a look at App.xaml.cs to see the implementation
+         */
+
         private void Instance_DownloadProgress(int obj)
         {
             app.RunOnUIThread(() =>
@@ -90,14 +95,7 @@ namespace FastShare.UI.Shared.ViewModels
 
         public async void ReceiveFile(string outputPath = null)
         {
-            try
-            {
-                var success = await FastShareCore.Instance.ReceiveFile(outputPath);
-            }
-            catch(Exception ex)
-            {
-                Console.Error.WriteLine(ex.StackTrace);
-            }
+            var success = await FastShareCore.Instance.ReceiveFile(outputPath);
         }
     }
 }
