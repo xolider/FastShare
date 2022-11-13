@@ -29,9 +29,14 @@ namespace FastShare.UI.WinUI
     /// </summary>
     public sealed partial class MainWindow : Window, IWindow
     {
+        public IntPtr hWnd;
+
         public MainWindow()
         {
             this.InitializeComponent();
+
+            hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+
             Resize(650, 450);
             this.Title = "FastShare";
             LoadIcon();
@@ -56,7 +61,6 @@ namespace FastShare.UI.WinUI
 
         private void Resize(int width, int height)
         {
-            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
@@ -65,7 +69,6 @@ namespace FastShare.UI.WinUI
 
         private void LoadIcon()
         {
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 

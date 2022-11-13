@@ -50,6 +50,11 @@ namespace FastShare.UI.WinUI
             m_window.Activate();
         }
 
+        public void RunOnUIThread(Action action)
+        {
+            m_window.DispatcherQueue.TryEnqueue(() => action());
+        }
+
         private Window m_window;
 
         IWindow IApp.CurrentWindow => m_window as IWindow;

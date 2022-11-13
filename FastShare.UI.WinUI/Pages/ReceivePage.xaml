@@ -8,10 +8,13 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-    </Grid>
+    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Vertical" Spacing="20" Padding="20">
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+            <Run Text="Your code:"/>
+            <Run Text="{Binding Code}"/>
+        </TextBlock>
+
+        <TextBlock Text="{Binding Status}"/>
+        <ProgressBar IsIndeterminate="{Binding IsWaitingForTransfert}" Value="{Binding ProgressPercent}"/>
+    </StackPanel>
 </Page>

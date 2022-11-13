@@ -1,6 +1,7 @@
 ﻿using FastShare.Core.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -56,6 +57,7 @@ namespace FastShare.Core.Net
 
         public void DownloadFile(string completePath, long length, Action<int> progress)
         {
+            Debug.WriteLine("Writing to " + completePath);
             var stream = File.OpenWrite(completePath);
 
             byte[] buffer = new byte[2048];
