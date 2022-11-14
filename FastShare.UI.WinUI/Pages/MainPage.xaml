@@ -9,18 +9,27 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="30">
-        <Button Command="{Binding ReceiveCommand}">
-            <StackPanel Orientation="Vertical" Spacing="10">
-                <SymbolIcon Symbol="Download"/>
-                <TextBlock Text="Recevoir un fichier"/>
-            </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button HorizontalAlignment="Right" Margin="0,10,10,0" Click="SettingsClicked">
+            <SymbolIcon Symbol="Setting"/>
         </Button>
-        <Button Command="{Binding SendCommand}">
-            <StackPanel Orientation="Vertical" Spacing="10">
-                <SymbolIcon Symbol="Send"/>
-                <TextBlock Text="Envoyer un fichier"/>
-            </StackPanel>
-        </Button>
-    </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="30">
+            <Button Command="{Binding ReceiveCommand}">
+                <StackPanel Orientation="Vertical" Spacing="10">
+                    <SymbolIcon Symbol="Download"/>
+                    <TextBlock Text="Recevoir un fichier"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding SendCommand}">
+                <StackPanel Orientation="Vertical" Spacing="10">
+                    <SymbolIcon Symbol="Send"/>
+                    <TextBlock Text="Envoyer un fichier"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
 </Page>

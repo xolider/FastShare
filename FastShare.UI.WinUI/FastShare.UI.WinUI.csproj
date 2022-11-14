@@ -30,8 +30,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\fastshare.ico" />
+    <None Remove="Dialogs\SettingsDialog.xaml" />
     <None Remove="Pages\MainPage.xaml" />
     <None Remove="Pages\ReceivePage.xaml" />
+    <None Remove="Pages\SendPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,6 +81,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\SendPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Dialogs\SettingsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 

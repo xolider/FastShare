@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReceiveViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SendViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
   </ItemGroup>
 </Project>

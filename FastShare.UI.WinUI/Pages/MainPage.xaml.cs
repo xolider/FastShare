@@ -1,5 +1,6 @@
 ﻿using FastShare.UI.Shared.Interfaces;
 using FastShare.UI.Shared.ViewModels;
+using FastShare.UI.WinUI.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -31,6 +32,13 @@ namespace FastShare.UI.WinUI.Pages
         {
             this.InitializeComponent();
             this.DataContext = vm;
+        }
+
+        private async void SettingsClicked(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SettingsDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            var result = await dialog.ShowAsync();
         }
     }
 }
