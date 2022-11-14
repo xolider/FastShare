@@ -2,6 +2,35 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>$(Authors)</Authors>
+    <PackageProjectUrl>https://github.com/xolider/FastShare</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xolider/FastShare</RepositoryUrl>
+    <Title>FastShare API</Title>
+    <Description>FastShare.Core is the FastShare client API for the FastShare project. it consists of allowing people to share files instantly and easily by generating a PIN code, and using this code to send file(s) to the receiver.</Description>
+    <PackageTags>FastShare;file share;network sharing;</PackageTags>
+    <PackageReleaseNotes>First release of the FastShare client API.</PackageReleaseNotes>
+    <PackageReadmeFile>Readme.MD</PackageReadmeFile>
+    <Copyright>https://raw.githubusercontent.com/xolider/FastShare/main/LICENSE</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>StoreLogo.scale-150.png</PackageIcon>
+    <SignAssembly>False</SignAssembly>
+    <Version>1.0.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\FastShare.UI.WinUI\Assets\StoreLogo.scale-150.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Readme.MD">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

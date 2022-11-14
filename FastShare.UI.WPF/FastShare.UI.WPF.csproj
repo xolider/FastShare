@@ -2,12 +2,33 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <AssemblyName>FastShareWPF</AssemblyName>
+    <ApplicationIcon>Assets\fastshare.ico</ApplicationIcon>
   </PropertyGroup>
 
   <Import Project="..\FastShare.UI.Shared\FastShare.UI.Shared.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <None Remove="Assets\fastshare.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\fastshare.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\fastshare.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FastShare.Core\FastShare.Core.csproj" />

@@ -1,10 +1,12 @@
 ﻿using FastShare.Core;
 using FastShare.Core.Model;
+using FastShare.UI.Shared.Components;
 using FastShare.UI.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Windows.Input;
 
 namespace FastShare.UI.Shared.ViewModels
 {
@@ -54,10 +56,30 @@ namespace FastShare.UI.Shared.ViewModels
             }
         }
 
+        private bool _showInExplorerVisible = false;
+        public bool ShowInExplorerVisible
+        {
+            get => _showInExplorerVisible;
+            set
+            {
+                _showInExplorerVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private CommandBase _showFileInExplorerCommand;
+        public ICommand ShowFileInExplorerCommand => _showFileInExplorerCommand;
+
         private FastShareFileInfo _info = null;
+
+        private string _folderPath = FastShareCore.DEFAULT_OUTPUT_PATH;
 
         public ReceiveViewModel(IApp app) : base(app)
         {
+            _showFileInExplorerCommand = new CommandBase((args) => true, (args) =>
+            {
+                Process.Start("explorer.exe", _folderPath);
+            });
             FastShareCore.Instance.DownloadStarted += Instance_DownloadStarted;
             FastShareCore.Instance.DownloadProgress += Instance_DownloadProgress;
 
@@ -74,6 +96,10 @@ namespace FastShare.UI.Shared.ViewModels
             app.RunOnUIThread(() =>
             {
                 ProgressPercent = obj * 100 / (int)_info.Length;
+                if(_progressPercent == 100)
+                {
+                    ShowInExplorerVisible = true;
+                }
             });
         }
 
@@ -95,6 +121,7 @@ namespace FastShare.UI.Shared.ViewModels
 
         public async void ReceiveFile(string outputPath = null)
         {
+            if (outputPath != null) _folderPath = outputPath;
             var success = await FastShareCore.Instance.ReceiveFile(outputPath);
         }
     }
