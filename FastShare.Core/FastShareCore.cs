@@ -1,6 +1,6 @@
 ﻿using FastShare.Core.Api;
 using FastShare.Core.Model;
-using FastShare.Core.Net;
+using FastShare.Net.Protocol;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -50,15 +50,19 @@ namespace FastShare.Core
             {
                 await Task.Run(() =>
                 {
-                    var net = new FastShareNetReceiver();
-                    net.Listen();
+                    var net = NetProtocolFactory.CreateReceiver();
 
-                    var fileInfo = net.GetFileInfo();
+                    var fileInfoNet = net.ReceiveFileInfos();
+                    var fileInfo = new FastShareFileInfo
+                    {
+                        Title = fileInfoNet.Key,
+                        Length = fileInfoNet.Value
+                    };
+
                     DownloadStarted?.Invoke(fileInfo);
 
-                    net.DownloadFile(Path.Combine(outPath == null ? DEFAULT_OUTPUT_PATH : outPath, fileInfo.Title), fileInfo.Length, DownloadProgress);
+                    net.ReceiveFile(fileInfo.Length, Path.Combine(outPath == null ? DEFAULT_OUTPUT_PATH : outPath, fileInfo.Title), DownloadProgress);
 
-                    net.CloseClient();
                     net.Shutdown();
                 });
                 return true;
@@ -77,12 +81,14 @@ namespace FastShare.Core
                 {
                     var address = await GetHostByCode(code);
 
-                    var net = new FastShareNetSender(address);
+                    var net = NetProtocolFactory.CreateSender(address, 45789);
 
                     SendStarted?.Invoke();
-                    net.SendFileInfo(filePath);
+                    var fi = new FileInfo(filePath);
 
-                    net.SendFile(filePath, new FileInfo(filePath).Length, SendProgress);
+                    net.SendFileInfos(fi.Name, fi.Length);
+
+                    net.SendFile(filePath, SendProgress);
 
                     net.Shutdown();
                 });

@@ -13,7 +13,7 @@ namespace FastShare.Core.Api
 #if DEBUG
         private readonly string url = "http://localhost:8080";
 #else
-        private readonly string url = "https://vicart.dev:8090";
+        private readonly string url = "https://fastshare.vicart.dev";
 #endif
 
         public FastShareApi()

@@ -28,5 +28,10 @@ namespace FastShare.UI.Mobile.Forms
         protected override void OnResume()
         {
         }
+
+        public void RunOnUIThread(Action action)
+        {
+            action();
+        }
     }
 }

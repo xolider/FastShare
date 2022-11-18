@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0" Text="Test"/>
+            <TextBox Grid.Column="0" Text="{Binding SavePath}" IsEnabled="False"/>
             <Button Grid.Column="2" Content="Browse"/>
         </Grid>
     </StackPanel>

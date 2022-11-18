@@ -1,6 +1,7 @@
 ﻿using FastShare.UI.Shared.Components;
 using FastShare.UI.Shared.Interfaces;
 using FastShare.UI.WinUI.Pages;
+using FastShare.UI.WinUI.Storage;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -62,5 +63,6 @@ namespace FastShare.UI.WinUI
         private Window m_window;
 
         IWindow IApp.CurrentWindow => m_window as IWindow; //Implementation of the navigable window
+        IStorage IApp.Storage => FSStorage.Instance;
     }
 }
