@@ -1,8 +1,10 @@
 ﻿using FastShare.Core.Api;
 using FastShare.Core.Model;
 using FastShare.Net.Protocol;
+using Open.Nat;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FastShare.Core
@@ -48,8 +50,17 @@ namespace FastShare.Core
             if (!_hasRequestedCode) throw new Exception("You must call RequestCode() before receiving a file");
             try
             {
+                var discoverer = new NatDiscoverer();
+                var cts = new CancellationTokenSource(10000);
+                var device = await discoverer.DiscoverDeviceAsync(PortMapper.Upnp, cts);
+
+                var mapping = new Mapping(Protocol.Tcp, 45789, 45789, "FastShare file transfert protocol");
+
+                await device.CreatePortMapAsync(mapping);
+
                 await Task.Run(() =>
                 {
+
                     var net = NetProtocolFactory.CreateReceiver();
 
                     var fileInfoNet = net.ReceiveFileInfos();
