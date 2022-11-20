@@ -23,6 +23,9 @@
     <EmbeddedResource Update="Pages\ReceivePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\SendPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <Import Project="..\..\FastShare.UI.Shared\FastShare.UI.Shared.projitems" Label="Shared" />

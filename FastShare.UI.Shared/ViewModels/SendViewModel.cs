@@ -1,8 +1,5 @@
 ﻿using FastShare.UI.Shared.Components;
 using FastShare.UI.Shared.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace FastShare.UI.Shared.ViewModels
