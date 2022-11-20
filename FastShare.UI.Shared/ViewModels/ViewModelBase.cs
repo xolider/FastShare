@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FastShare.UI.Shared.ViewModels
 {
-    internal abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         protected IApp app;
 

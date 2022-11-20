@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Open.Nat" Version="2.1.0" />
     <PackageReference Include="System.Text.Json" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Open.NAT\Open.Nat\Open.Nat.csproj" />
     <ProjectReference Include="..\FastShare.Net.Protocol\FastShare.Net.Protocol.csproj" />
   </ItemGroup>
 

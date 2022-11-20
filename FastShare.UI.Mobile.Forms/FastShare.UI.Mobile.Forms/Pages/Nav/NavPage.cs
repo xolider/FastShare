@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace FastShare.UI.Mobile.Forms.Pages.Nav
 {
-    internal class NavPage : NavigationPage, IWindow
+    public class NavPage : NavigationPage, IWindow
     {
 
         public NavPage(Page initialPage) : base(initialPage) { }
@@ -23,7 +23,7 @@ namespace FastShare.UI.Mobile.Forms.Pages.Nav
                     targetPage = new ReceivePage();
                     break;
                 case Shared.Components.NavPage.SEND:
-
+                    targetPage = new SendPage();
                     break;
             }
 

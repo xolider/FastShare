@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace FastShare.UI.Shared.ViewModels
 {
-    internal class SendViewModel : ViewModelBase
+    public class SendViewModel : ViewModelBase
     {
         private CommandBase _sendCommand;
         public ICommand SendCommand => _sendCommand;
