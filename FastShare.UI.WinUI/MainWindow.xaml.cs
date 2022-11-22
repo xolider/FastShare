@@ -32,13 +32,17 @@ namespace FastShare.UI.WinUI
         /// <summary>
         /// Implementation of the Win32 window
         /// </summary>
-        public IntPtr hWnd;
+        public IntPtr hWnd
+        {
+            get
+            {
+                return WinRT.Interop.WindowNative.GetWindowHandle(this);
+            }
+        }
 
         public MainWindow()
         {
             this.InitializeComponent();
-
-            hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
 
             Resize(650, 450);
             this.Title = "FastShare";
@@ -59,6 +63,9 @@ namespace FastShare.UI.WinUI
                     break;
                 case NavPage.RECEIVE:
                     targetPage = typeof(ReceivePage);
+                    break;
+                case NavPage.SEND:
+                    targetPage = typeof(SendPage);
                     break;
             }
 

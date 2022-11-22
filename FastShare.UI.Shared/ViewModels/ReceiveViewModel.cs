@@ -62,6 +62,7 @@ namespace FastShare.UI.Shared.ViewModels
             FastShareCore.Instance.DownloadProgress += Instance_DownloadProgress;
 
             RequestCode();
+            ReceiveFile();
         }
 
         /*
